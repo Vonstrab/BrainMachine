@@ -7,8 +7,7 @@
 #ifndef _MACHINE_H_
 #define _MACHINE_H_
 
-    char readInstruction(Brain* b);
-void executeCode(Brain* b, int verbose, int freq);
-void executeInstruction(char c, Brain* b, int option);
+void executeCode(BrainVM* b, int verbose, int freq);
+void executeInstruction(char c, BrainVM* b);
 
 #endif

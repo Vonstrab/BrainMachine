@@ -77,12 +77,16 @@ BrainVM* initVM() {
   b->labels = initLabel();
 }
 
-void ChangePC(BrainVM* b, int newPC) {
+void changePC(BrainVM* b, int newPC) {
   b->code->PC = newPC;
 }
 
 void nextPC(BrainVM* b) {
   b->code->PC++;
+}
+
+int getPC(BrainVM* b) {
+  return b->code->PC;
 }
 
 char getInst(BrainVM* b) {
@@ -103,7 +107,7 @@ void decrement(BrainVM* b) {
   b->array->array[b->array->dataPointer] = value;
 }
 
-void ChangeValue(BrainVM* b, int newValue) {
+void changeValue(BrainVM* b, int newValue) {
   int value = newValue % 256;
   b->array->array[b->array->dataPointer] = value;
 }
@@ -131,9 +135,13 @@ void PointerRight(BrainVM* b) {
   b->array->dataPointer = pointer;
 }
 
-int getPointer(BrainVM * b){
+int getPointer(BrainVM* b) {
   return b->array->dataPointer;
-} 
+}
+
+int getSizeLabel(BrainVM* b) {
+  return b->labels->sizeLabels;
+}
 
 int incr(Brain* b) {
   int val = b->tab[b->pointeur];
@@ -165,51 +173,4 @@ int shift_left(Brain* b) {
   b->pointeur %= b->taille;
   b->inst++;
   return b->pointeur;
-}
-
-int Bread(Brain* b) {
-  printf("\nEnter a value\n");
-  int i = scanf(" %d", &b->tab[b->pointeur]);
-  b->inst++;
-  return i;
-}
-
-int Bprint(Brain* b) {
-  printf("%c", b->tab[b->pointeur]);
-  b->inst++;
-  return b->tab[b->pointeur];
-}
-
-int LBrace(Brain* b) {
-  int i;
-  int inst = b->inst;
-  inst++;
-  char val = b->tab[b->pointeur];
-  if (val == '\0') {
-    for (i = 0; i < b->tailleLabels; i++) {
-      if (b->tabLabelL[i] == inst) {
-        b->inst = b->tabLabelR[i];
-      }
-    }
-  } else {
-    b->inst++;
-  }
-  return b->inst;
-}
-
-int RBrace(Brain* b) {
-  int i;
-  int inst = b->inst;
-  inst++;
-  char val = b->tab[b->pointeur];
-  if (val != '\0') {
-    for (i = 0; i < b->tailleLabels; i++) {
-      if (b->tabLabelR[i] == inst) {
-        b->inst = b->tabLabelL[i];
-      }
-    }
-  } else {
-    b->inst++;
-  }
-  return b->inst;
 }
