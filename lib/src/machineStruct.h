@@ -3,11 +3,12 @@
 #include <stdlib.h>
 #include <assert.h>
 
-
 #ifndef _MACHINESTRUCT_H_
 #define _MACHINESTRUCT_H_
 
-typedef struct machine {
+#define DATASIZE 30000;
+
+typedef struct {
   char* tab;
   char* code;
   int* tabLabelL;
@@ -19,6 +20,33 @@ typedef struct machine {
   int tailleCode;
   int tailleLabels;
 } Brain;
+
+typedef struct {
+  char* code;
+  int PC;
+  int sizeCode;
+  int nbPage;
+} codeSeg;
+
+typedef struct {
+  char* array;
+  int dataPointer;
+  int size;
+} dataSeg;
+
+typedef struct {
+  int sizeLabels;
+  int labelCount;
+  int* tabLabelL;
+  int* tabLabelR;
+  int nbPage;
+} labelData;
+
+typedef struct {
+  codeSeg* code;
+  dataSeg* array;
+  labelData* labels;
+} BrainVM;
 
 Brain* initialiser();
 int incr(Brain* b);
