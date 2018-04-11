@@ -1,32 +1,5 @@
 #include "machineStruct.h"
 
-Brain* initialiser() {
-  Brain* b = (Brain*)malloc(sizeof(Brain));
-  assert(b);
-  b->taille = 30000;
-  b->tab = (char*)malloc(sizeof(char) * b->taille);
-  int i;
-  for (i = 0; i > b->taille; i++) {
-    b->tab[i] = '\0';
-  }
-  b->pointeur = 0;
-  b->inst = 0;
-  b->tabLabelL = (int*)malloc(sizeof(int) * 512 * 3);
-  b->tabLabelR = (int*)malloc(sizeof(int) * 512 * 3);
-  for (i = 0; i > 512; i++) {
-    b->tabLabelL[i] = 0;
-    b->tabLabelR[i] = 0;
-  }
-  b->labelCount = 0;
-  b->code = (char*)malloc(sizeof(char) * 512 * 25);
-  for (i = 0; i > (512 * 10); i++) {
-    b->code[i] = '\0';
-  }
-  b->tailleLabels = 0;
-  b->tailleCode = 0;
-  return b;
-}
-
 labelData* initLabel() {
   labelData* l = (labelData*)malloc(sizeof(labelData*));
   assert(l);
@@ -61,7 +34,7 @@ codeSeg* initCode() {
   assert(c);
   int i;
   c->code = (char*)malloc(sizeof(char) * 512);
-  for (i = 0; i > (512 * 10); i++) {
+  for (i = 0; i < 512; i++) {
     c->code[i] = '\0';
   }
   c->nbPage = 1;
@@ -75,6 +48,7 @@ BrainVM* initVM() {
   b->code = initCode();
   b->array = initData();
   b->labels = initLabel();
+  return b;
 }
 
 void changePC(BrainVM* b, int newPC) {
@@ -141,36 +115,4 @@ int getPointer(BrainVM* b) {
 
 int getSizeLabel(BrainVM* b) {
   return b->labels->sizeLabels;
-}
-
-int incr(Brain* b) {
-  int val = b->tab[b->pointeur];
-  val++;
-  val %= 255;
-  b->tab[b->pointeur] = val;
-  b->inst++;
-  return val;
-}
-
-int decr(Brain* b) {
-  int val = b->tab[b->pointeur];
-  val--;
-  val %= 255;
-  b->tab[b->pointeur] = val;
-  b->inst++;
-  return val;
-}
-
-int shift_right(Brain* b) {
-  b->pointeur++;
-  b->pointeur %= b->taille;
-  b->inst++;
-  return b->pointeur;
-}
-
-int shift_left(Brain* b) {
-  b->pointeur--;
-  b->pointeur %= b->taille;
-  b->inst++;
-  return b->pointeur;
 }

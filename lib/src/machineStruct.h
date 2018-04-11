@@ -9,19 +9,6 @@
 #define DATASIZE 30000;
 
 typedef struct {
-  char* tab;
-  char* code;
-  int* tabLabelL;
-  int* tabLabelR;
-  int taille;
-  int pointeur;
-  int inst;
-  int labelCount;
-  int tailleCode;
-  int tailleLabels;
-} Brain;
-
-typedef struct {
   char* code;
   int PC;
   int sizeCode;
@@ -66,15 +53,5 @@ void PointerLeft(BrainVM* b);
 void PointerRight(BrainVM* b);
 int getPointer(BrainVM* b);
 int getSizeLabel(BrainVM* b);
-
-Brain* initialiser();
-int incr(Brain* b);
-int decr(Brain* b);
-int shift_right(Brain* b);
-int shift_left(Brain* b);
-int Bread(Brain* b);
-int Bprint(Brain* b);
-int LBrace(Brain* b);
-int RBrace(Brain* b);
 
 #endif

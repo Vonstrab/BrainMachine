@@ -9,10 +9,10 @@
 /*Read the next non-empty char in file */
 char ReadChar(FILE* f);
 
-void printCode(Brain* b);
-void printLabels(Brain* b);
-void printData(Brain* b);
-void printMem(Brain *b);
+void printCode(BrainVM* b);
+void printLabels(BrainVM* b);
+void printData(BrainVM* b);
+void printMem(BrainVM *b);
 
 void sleep_ms(int milliseconds);
 

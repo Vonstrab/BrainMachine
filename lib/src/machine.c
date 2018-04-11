@@ -2,47 +2,46 @@
 
 void Bread(BrainVM* b) {
   printf("\nEnter a value\n");
+  int a;
   int i;
-  scanf(" %d", &i);
-  ChangeValue(b, i);
+  a = scanf(" %d", &i);
+  changeValue(b, i);
 }
 
 void Bprint(BrainVM* b) {
   printf("%c", getValue(b));
 }
 
-int LBrace(Brainvm* b) {
+void LBrace(BrainVM* b) {
   int i;
   int inst = getPC(b);
   inst++;
   char val = getValue(b);
   if (val == '\0') {
     for (i = 0; i < getSizeLabel(b); i++) {
-      if (b->labelData->tabLabelL[i] == inst) {
-        changePC(b, b->labelData->tabLabelR[i]);
+      if (b->labels->tabLabelL[i] == inst) {
+        changePC(b, b->labels->tabLabelR[i]);
       }
     }
   } else {
     nextPC(b);
   }
-  return b->inst;
 }
 
-int RBrace(Brain* b) {
+void RBrace(BrainVM* b) {
   int i;
   int inst = getPC(b);
   inst++;
   char val = getValue(b);
   if (val == '\0') {
     for (i = 0; i < getSizeLabel(b); i++) {
-      if (b->labelData->tabLabelR[i] == inst) {
-        changePC(b, b->labelData->tabLabelL[i]);
+      if (b->labels->tabLabelR[i] == inst) {
+        changePC(b, b->labels->tabLabelL[i]);
       }
     }
   } else {
     nextPC(b);
   }
-  return b->inst;
 }
 
 void executeInstruction(char c, BrainVM* b) {
@@ -98,17 +97,18 @@ void executeCode(BrainVM* b, int verbose, int freq) {
       printf("Execution of the %c instruction.\nInstruction number : %d\n",
              inst, getPointer(b));
     }
-    executeInstruction(inst, b, verbose);
+    executeInstruction(inst, b);
     if (freq > 0) {
       sleep_ms(freq);
     }
     if (verbose) {
-      printf("Value Pointed: %d Case :%d\n", b->tab[b->pointeur], b->pointeur);
+      printf("Value Pointed: %d Case :%d\n",
+             b->array->array[b->array->dataPointer], b->array->dataPointer);
     }
     if (freq == -1) {
       printf("Press ENTER Key to Continue\n");
       getchar();
     }
-    inst = readInstruction(b);
+    inst = getInst(b);
   }
 }

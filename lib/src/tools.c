@@ -9,13 +9,11 @@ char ReadChar(FILE* f) {
   return c;
 }
 
-
-
-void printCode(Brain* b) {
+void printCode(BrainVM* b) {
   int i = 0;
   int j = 0;
-  for (i = 0; i < b->tailleCode; i++) {
-    printf("%c", b->code[i]);
+  for (i = 0; i < b->code->sizeCode; i++) {
+    printf("%c", b->code->code[i]);
     if (j == 70) {
       printf("\n");
       j = 0;
@@ -25,28 +23,29 @@ void printCode(Brain* b) {
   printf("\n");
 }
 
-void printLabels(Brain* b) {
+void printLabels(BrainVM* b) {
   printf("Le tableau des labels :\n");
   int i;
-  for (i = 0; i < b->tailleLabels; i++) {
-    printf("Label %d : %d %d \n", i, b->tabLabelL[i], b->tabLabelR[i]);
+  for (i = 0; i < b->labels->sizeLabels; i++) {
+    printf("Label %d : %d %d \n", i, b->labels->tabLabelL[i],
+           b->labels->tabLabelR[i]);
   }
   printf("\n");
 }
 
-void printData(Brain* b) {
-  printf("Number of instructions : %d\n", b->tailleCode);
-  printf("Number of nested braces : %d\n", b->tailleLabels);
+void printData(BrainVM* b) {
+  printf("Number of instructions : %d\n", b->code->sizeCode);
+  printf("Number of nested braces : %d\n", b->labels->sizeLabels);
 }
 
-void printMem(Brain* b) {
+void printMem(BrainVM* b) {
   printf("\nMemoire : :\n");
-    printf("| ");
-  
+  printf("| ");
+
   int i = 0;
   int j = 0;
-  for (i = 0; b->tab[i]!=0; i++) {
-    printf("%d | ", b->tab[i]);
+  for (i = 0; b->array->array[i] != 0; i++) {
+    printf("%d | ", b->array->array[i]);
     if (j == 70) {
       printf("\n");
       j = 0;
@@ -56,10 +55,9 @@ void printMem(Brain* b) {
   printf("\n");
 }
 
-void sleep_ms(int milliseconds) 
-{
-    struct timespec ts;
-    ts.tv_sec = milliseconds / 1000;
-    ts.tv_nsec = (milliseconds % 1000) * 1000000;
-    nanosleep(&ts, NULL);
+void sleep_ms(int milliseconds) {
+  struct timespec ts;
+  ts.tv_sec = milliseconds / 1000;
+  ts.tv_nsec = (milliseconds % 1000) * 1000000;
+  nanosleep(&ts, NULL);
 }

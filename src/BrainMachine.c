@@ -152,11 +152,12 @@ int main(int argc, char* argv[]) {
     printf("VM frequency = %d\n", vm_freq);
   }
 
-  Brain* b = initialiser();
+  BrainVM* b = initVM();
 
   printf("loading file: %s\n", filename);
 
   parse(filename, b);
+
   if (debug_vm) {
     printf("=== Loaded program:\n");
     printCode(b);
@@ -170,6 +171,7 @@ int main(int argc, char* argv[]) {
   if (debug_vm) {
     printf("=== Begin execution ====\n");
   }
+
   executeCode(b, verbose, vm_freq);
 
   return 0;

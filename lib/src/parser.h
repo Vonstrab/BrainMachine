@@ -8,7 +8,7 @@
 #define _PARSER_H_
 
 int isValid(char c);
-int parse(const char* in, Brain* b);
+void parse(const char* in, BrainVM* b);
 
 
 #endif
