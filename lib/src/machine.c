@@ -9,7 +9,7 @@ void Bread(BrainVM* b) {
 }
 
 void Bprint(BrainVM* b) {
-  printf("%c", getValue(b));
+  printf("%c",(char) getValue(b));
 }
 
 void LBrace(BrainVM* b) {
@@ -33,7 +33,7 @@ void RBrace(BrainVM* b) {
   int inst = getPC(b);
   inst++;
   char val = getValue(b);
-  if (val == '\0') {
+  if (val != '\0') {
     for (i = 0; i < getSizeLabel(b); i++) {
       if (b->labels->tabLabelR[i] == inst) {
         changePC(b, b->labels->tabLabelL[i]);
@@ -95,7 +95,7 @@ void executeCode(BrainVM* b, int verbose, int freq) {
     if (verbose) {
       printf("\n");
       printf("Execution of the %c instruction.\nInstruction number : %d\n",
-             inst, getPointer(b));
+             inst, getPC(b));
     }
     executeInstruction(inst, b);
     if (freq > 0) {
