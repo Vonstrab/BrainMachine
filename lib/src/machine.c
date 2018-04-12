@@ -9,7 +9,7 @@ void Bread(BrainVM* b) {
 }
 
 void Bprint(BrainVM* b) {
-  printf("%c",(char) getValue(b));
+  printf("%c", (char)getValue(b));
 }
 
 void LBrace(BrainVM* b) {
@@ -17,8 +17,9 @@ void LBrace(BrainVM* b) {
   int inst = getPC(b);
   inst++;
   char val = getValue(b);
+  int cond = getSizeLabel(b);
   if (val == '\0') {
-    for (i = 0; i < getSizeLabel(b); i++) {
+    for (i = 0; i < cond; i++) {
       if (b->labels->tabLabelL[i] == inst) {
         changePC(b, b->labels->tabLabelR[i]);
       }
@@ -33,8 +34,9 @@ void RBrace(BrainVM* b) {
   int inst = getPC(b);
   inst++;
   char val = getValue(b);
+  int cond = getSizeLabel(b);
   if (val != '\0') {
-    for (i = 0; i < getSizeLabel(b); i++) {
+    for (i = 0; i < cond; i++) {
       if (b->labels->tabLabelR[i] == inst) {
         changePC(b, b->labels->tabLabelL[i]);
       }
