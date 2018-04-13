@@ -4,11 +4,9 @@ labelData* initLabel() {
   labelData* l = (labelData*)malloc(sizeof(labelData*));
   assert(l);
   int i;
-  l->tabLabelL = (int*)calloc(512*2, sizeof(int));
-  l->tabLabelR = (int*)calloc(512*2, sizeof(int));
-  l->labelCount = 0;
+  l->tabLabelL = (int*)calloc(30000, sizeof(int));
+  l->tabLabelR = (int*)calloc(30000, sizeof(int));
   l->sizeLabels = 0;
-  l->nbPage = 1;
   return l;
 }
 
@@ -26,9 +24,7 @@ codeSeg* initCode() {
   codeSeg* c = (codeSeg*)malloc(sizeof(codeSeg));
   assert(c);
   int i;
-  c->code = (char*)calloc(512*25, sizeof(char));
-
-  c->nbPage = 2;
+  c->code = (char*)calloc(30000, sizeof(char));
   c->sizeCode = 0;
   c->PC = 0;
   return c;

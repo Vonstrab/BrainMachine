@@ -12,7 +12,6 @@ typedef struct {
   char* code;
   int PC;
   int sizeCode;
-  int nbPage;
 } codeSeg;
 
 typedef struct {
@@ -23,10 +22,8 @@ typedef struct {
 
 typedef struct {
   int sizeLabels;
-  int labelCount;
   int* tabLabelL;
   int* tabLabelR;
-  int nbPage;
 } labelData;
 
 typedef struct {

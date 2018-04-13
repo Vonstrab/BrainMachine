@@ -34,7 +34,7 @@ void printLabels(BrainVM* b) {
 }
 
 void printData(BrainVM* b) {
-  printf("Number of instructions : %d\n", b->code->sizeCode);
+  printf("Number of instructions : %d\n", b->code->sizeCode+1);
   printf("Number of nested braces : %d\n", b->labels->sizeLabels);
 }
 
