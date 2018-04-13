@@ -10,7 +10,6 @@
 char ReadChar(FILE* f);
 
 void printCode(BrainVM* b);
-void printLabels(BrainVM* b);
 void printData(BrainVM* b);
 void printMem(BrainVM *b);
 

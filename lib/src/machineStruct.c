@@ -4,8 +4,8 @@ labelData* initLabel() {
   labelData* l = (labelData*)malloc(sizeof(labelData*));
   assert(l);
   int i;
-  l->tabLabelL = (int*)calloc(30000, sizeof(int));
-  l->tabLabelR = (int*)calloc(30000, sizeof(int));
+  l->tabLabelL = (int*)calloc(30005, sizeof(int));
+  l->tabLabelR = (int*)calloc(30005, sizeof(int));
   l->sizeLabels = 0;
   return l;
 }

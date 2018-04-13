@@ -14,6 +14,10 @@ void parse(const char* in, BrainVM* b) {
   char c;
   int i;
   int k = 0;
+  int* stackBRACE;
+  int sptr = 0;
+
+  stackBRACE = (int*)calloc(1000, sizeof(int));
 
   while ((c = ReadChar(f_in)) != EOF) {
     if (isValid(c)) {
@@ -22,26 +26,25 @@ void parse(const char* in, BrainVM* b) {
     }
 
     if (c == '[') {
-      b->labels->tabLabelL[label] = calc;
-      label++;
+      stackBRACE[sptr] = calc;
+      sptr++;
     }
 
     if (c == ']') {
-      for (i = label - 1; i >= 0; i--) {
-        if (b->labels->tabLabelR[i] == 0) {
-          b->labels->tabLabelR[i] = calc;
-          k = 1;
-          break;
-        }
-      }
-
-      if (k == 0) {
+      if (sptr == 0) {
         printf("\nERROR : Right Brace Unmatched\n");
         ERROR = 1;
       }
-      k = 0;
+
+      k = stackBRACE[sptr - 1];
+      sptr--;
+
+      b->labels->tabLabelL[calc - 1] = k - 1;
+      b->labels->tabLabelR[k - 1] = calc - 1;
+      label++;
     }
   }
+
   fclose(f_in);
   b->code->code[calc] = '\0';
   b->labels->tabLabelL[label] = '\0';
@@ -49,16 +52,12 @@ void parse(const char* in, BrainVM* b) {
   b->code->sizeCode = calc;
   b->labels->sizeLabels = label;
 
-  for (i = 0; i < label; i++) {
-    if (b->labels->tabLabelR[i] == '\0') {
-      printf("\nERROR : Left Brace Unmatched '[' \n");
-      ERROR = 1;
-    }
-    if (b->labels->tabLabelL[i] == '\0') {
-      printf("\nERROR Right Brace Unmatched ']' \n");
-      ERROR = 1;
-    }
+  if (sptr != 0) {
+    printf("\nERROR : Left Brace Unmatched '[' \n");
+    ERROR = 1;
   }
+
+  free (stackBRACE);
 
   if (ERROR == 1) {
     printf("\nError found , now quiting \n");

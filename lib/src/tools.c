@@ -23,16 +23,6 @@ void printCode(BrainVM* b) {
   printf("\n");
 }
 
-void printLabels(BrainVM* b) {
-  printf("Le tableau des labels :\n");
-  int i;
-  for (i = 0; i < b->labels->sizeLabels; i++) {
-    printf("Label %d : %d %d \n", i, b->labels->tabLabelL[i],
-           b->labels->tabLabelR[i]);
-  }
-  printf("\n");
-}
-
 void printData(BrainVM* b) {
   printf("Number of instructions : %d\n", b->code->sizeCode+1);
   printf("Number of nested braces : %d\n", b->labels->sizeLabels);

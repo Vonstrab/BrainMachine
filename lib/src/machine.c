@@ -14,36 +14,22 @@ void Bprint(BrainVM* b) {
 
 void LBrace(BrainVM* b) {
   int i;
-  int inst = getPC(b);
-  inst++;
   char val = getValue(b);
-  int cond = getSizeLabel(b);
+  int pc = getPC(b);
   if (val == '\0') {
-    for (i = 0; i < cond; i++) {
-      if (b->labels->tabLabelL[i] == inst) {
-        changePC(b, b->labels->tabLabelR[i]);
-      }
-    }
-  } else {
-    nextPC(b);
+    changePC(b, b->labels->tabLabelR[pc]);
   }
+  nextPC(b);
 }
 
 void RBrace(BrainVM* b) {
   int i;
-  int inst = getPC(b);
-  inst++;
   char val = getValue(b);
-  int cond = getSizeLabel(b);
+  int pc = getPC(b);
   if (val != '\0') {
-    for (i = 0; i < cond; i++) {
-      if (b->labels->tabLabelR[i] == inst) {
-        changePC(b, b->labels->tabLabelL[i]);
-      }
-    }
-  } else {
-    nextPC(b);
+    changePC(b, b->labels->tabLabelL[pc]);
   }
+  nextPC(b);
 }
 
 void executeInstruction(char c, BrainVM* b) {
