@@ -4,5 +4,5 @@ V 1.0
 
 V 1.5
 ======
-+refactorin of the code in a more logical structure
-+optimisations, the most important is the introduction of a hash table
++ Refactorin of the code in a more logical structure
++ Optimisations, the most important is the introduction of a hash table
