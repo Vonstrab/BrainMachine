@@ -10,6 +10,12 @@ labelData* initLabel() {
   return l;
 }
 
+void freeLabel(labelData * l) {
+  free(l->tabLabelL);
+  free(l->tabLabelR);
+  free(l);
+}
+
 dataSeg* initData() {
   dataSeg* d = (dataSeg*)malloc(sizeof(codeSeg));
   assert(d);
@@ -18,6 +24,11 @@ dataSeg* initData() {
   d->array = (char*)calloc(d->size, sizeof(char));
   d->dataPointer = 0;
   return d;
+}
+
+void freeData(dataSeg* d) {
+  free(d->array);
+  free(d);
 }
 
 codeSeg* initCode() {
@@ -30,12 +41,24 @@ codeSeg* initCode() {
   return c;
 }
 
+void freeCode(codeSeg* c) {
+  free(c->code);
+  free(c);
+}
+
 BrainVM* initVM() {
   BrainVM* b = (BrainVM*)malloc(sizeof(BrainVM));
   b->code = initCode();
   b->array = initData();
   b->labels = initLabel();
   return b;
+}
+
+void freeVM(BrainVM* b) {
+  freeLabel(b->labels);
+  freeData(b->array);
+  freeCode(b->code);
+  free(b);
 }
 
 void changePC(BrainVM* b, int newPC) {

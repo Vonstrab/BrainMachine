@@ -37,6 +37,8 @@ dataSeg* initData();
 codeSeg* initCode();
 BrainVM* initVM();
 
+void freeVM(BrainVM* b);
+
 void changePC(BrainVM* b, int newPC);
 void nextPC(BrainVM* b);
 int getPC(BrainVM* b);

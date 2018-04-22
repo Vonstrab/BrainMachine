@@ -179,6 +179,8 @@ int main(int argc, char* argv[]) {
     printf("%d Instructions executed\n", nb_inst);
   }
 
+  freeVM(b);
+
   printf("-------------------\n");
   printf("VM stopping\n");
 
