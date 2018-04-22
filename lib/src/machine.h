@@ -7,7 +7,7 @@
 #ifndef _MACHINE_H_
 #define _MACHINE_H_
 
-void executeCode(BrainVM* b, int verbose, int freq);
+int executeCode(BrainVM* b, int verbose, int freq);
 void executeInstruction(char c, BrainVM* b);
 
 #endif

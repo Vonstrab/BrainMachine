@@ -172,12 +172,11 @@ int main(int argc, char* argv[]) {
     printf("=== Begin execution ====\n");
   }
 
-  executeCode(b, verbose, vm_freq);
-
-  return 0;
+  int nb_inst = executeCode(b, verbose, vm_freq);
 
   if (debug_vm) {
     printf("=== Finish execution ====\n");
+    printf("%d Instructions executed\n", nb_inst);
   }
 
   printf("-------------------\n");

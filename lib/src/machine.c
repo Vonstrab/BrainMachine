@@ -77,8 +77,9 @@ void executeInstruction(char c, BrainVM* b) {
   }
 }
 
-void executeCode(BrainVM* b, int verbose, int freq) {
+int executeCode(BrainVM* b, int verbose, int freq) {
   char inst = getInst(b);
+  int nb_instr = 1;
   while (inst != '\0') {
     if (verbose) {
       printf("\n");
@@ -98,5 +99,7 @@ void executeCode(BrainVM* b, int verbose, int freq) {
       getchar();
     }
     inst = getInst(b);
+    nb_instr ++;
   }
+  return nb_instr;
 }
