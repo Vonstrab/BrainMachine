@@ -30,6 +30,12 @@ typedef struct {
   codeSeg* code;
   dataSeg* array;
   labelData* labels;
+
+  //options data
+  int debug_vm ;
+  int vm_freq ;
+  int verbose ;
+  int step ;
 } BrainVM;
 
 labelData* initLabel();

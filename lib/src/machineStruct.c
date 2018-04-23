@@ -10,7 +10,7 @@ labelData* initLabel() {
   return l;
 }
 
-void freeLabel(labelData * l) {
+void freeLabel(labelData* l) {
   free(l->tabLabelL);
   free(l->tabLabelR);
   free(l);
@@ -51,6 +51,10 @@ BrainVM* initVM() {
   b->code = initCode();
   b->array = initData();
   b->labels = initLabel();
+  b->debug_vm = 0;
+  b->vm_freq = 0;
+  b->verbose = 0;
+  b->step = 0;
   return b;
 }
 

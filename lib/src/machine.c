@@ -77,29 +77,29 @@ void executeInstruction(char c, BrainVM* b) {
   }
 }
 
-int executeCode(BrainVM* b, int verbose, int freq) {
+int executeCode(BrainVM* b) {
   char inst = getInst(b);
   int nb_instr = 1;
   while (inst != '\0') {
-    if (verbose) {
+    if (b->verbose) {
       printf("\n");
       printf("Execution of the %c instruction.\nInstruction number : %d\n",
              inst, getPC(b));
     }
     executeInstruction(inst, b);
-    if (freq > 0) {
-      sleep_ms(freq);
+    if (b->vm_freq > 0) {
+      sleep_ms(b->vm_freq);
     }
-    if (verbose) {
+    if (b->verbose) {
       printf("Value Pointed: %d Case :%d\n",
              b->array->array[b->array->dataPointer], b->array->dataPointer);
     }
-    if (freq == -1) {
+    if (b->step) {
       printf("Press ENTER Key to Continue\n");
       getchar();
     }
     inst = getInst(b);
-    nb_instr ++;
+    nb_instr++;
   }
   return nb_instr;
 }

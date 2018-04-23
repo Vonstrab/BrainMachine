@@ -76,11 +76,8 @@ int parse_vm_freq(int index, char* argv[]) {
 }
 
 int main(int argc, char* argv[]) {
-  int debug_vm = 0;
-  int vm_freq = 0;
-  int verbose = 0;
-  int step = 0;
   char* filename = NULL;
+  BrainVM* b = initVM();
   int i;
 
   printf("BrainMachine v1.0 \n");
@@ -97,28 +94,27 @@ int main(int argc, char* argv[]) {
     exit(EXIT_SUCCESS);
   }
 
-  /* On commence par analyser la ligne de commande */
   for (i = 1; i < argc; i++) {
     if (parse_debug_vm(i, argv)) {
-      if (debug_vm) {
+      if (b->debug_vm) {
         fprintf(stderr, "option -d or --vmdebug set twice\n");
         exit(EXIT_FAILURE);
       } else {
-        debug_vm = 1;
+        b->debug_vm = 1;
       }
     } else if (parse_verbose(i, argv)) {
-      if (verbose) {
+      if (b->verbose) {
         fprintf(stderr, "option -v or --verbose set twice\n");
         exit(EXIT_FAILURE);
       } else {
-        verbose = 1;
+        b->verbose = 1;
       }
     } else if (parse_step(i, argv)) {
-      if (step) {
+      if (b->step) {
         fprintf(stderr, "option -s or --step set twice\n");
         exit(EXIT_FAILURE);
       } else {
-        step = 1;
+        b->step = 1;
       }
     } else {
       int freq = parse_vm_freq(i, argv);
@@ -130,35 +126,34 @@ int main(int argc, char* argv[]) {
         }
         break;
       } else {
-        vm_freq = freq;
+        b->vm_freq = freq;
       }
     }
   }
-  if (debug_vm) {
+  if (b->debug_vm) {
     printf("starting VM in debug mode\n");
   }
-  if (verbose) {
-    printf("starting VM in debug mode\n");
+  if (b->step) {
+    printf("starting VM in step mode\n");
   }
-  if (vm_freq > 0 && step == 1) {
+  if (b->verbose) {
+    printf("starting VM in verbose mode\n");
+  }
+  if (b->vm_freq > 0 && b->step == 1) {
     fprintf(stderr,
             "Step by step execution and set frequency not Compatible\n");
     exit(EXIT_FAILURE);
   }
-  if (step) {
-    vm_freq = -1;
-  }
-  if (vm_freq > 0) {
-    printf("VM frequency = %d\n", vm_freq);
-  }
 
-  BrainVM* b = initVM();
+  if (b->vm_freq > 0) {
+    printf("VM frequency = %d\n", b->vm_freq);
+  }
 
   printf("loading file: %s\n", filename);
 
   parse(filename, b);
 
-  if (debug_vm) {
+  if (b->debug_vm) {
     printf("=== Loaded program:\n");
     printCode(b);
     printf("\n===================\n");
@@ -168,13 +163,13 @@ int main(int argc, char* argv[]) {
   }
 
   printf("-------------------\n");
-  if (debug_vm) {
+  if (b->debug_vm) {
     printf("=== Begin execution ====\n");
   }
 
-  int nb_inst = executeCode(b, verbose, vm_freq);
+  int nb_inst = executeCode(b);
 
-  if (debug_vm) {
+  if (b->debug_vm) {
     printf("=== Finish execution ====\n");
     printf("%d Instructions executed\n", nb_inst);
   }
